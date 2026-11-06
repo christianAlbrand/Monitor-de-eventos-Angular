@@ -1,0 +1,43 @@
+<main class="dashboard">
+  <header class="header">
+    <h1>Reactive Event Monitor</h1>
+
+    <div class="status" [class.active]="isRunning$ | async">
+      <span class="dot"></span>
+      {{ (isRunning$ | async) ? 'Activo' : 'Detenido' }}
+    </div>
+  </header>
+
+  <section class="cards">
+    <article class="card counter-card">
+      <h2>Contador</h2>
+      <p class="counter">{{ counter$ | async }}</p>
+    </article>
+
+    <article class="card">
+      <h2>Eventos</h2>
+      <p class="info">{{ (events$ | async)?.length }} / 10</p>
+    </article>
+  </section>
+
+  <section class="controls">
+    <button class="btn start" (click)="start()" [disabled]="isRunning$ | async">Iniciar</button>
+    <button class="btn stop" (click)="stop()" [disabled]="!(isRunning$ | async)">Detener</button>
+    <button class="btn reset" (click)="reset()">Reiniciar</button>
+  </section>
+
+  <section class="card">
+    <h2>Historial</h2>
+
+    <ul class="event-list">
+      @for (e of events$ | async; track e.id) {
+        <li class="event">
+          <span>#{{ e.id }} &nbsp; Valor: <strong>{{ e.value }}</strong></span>
+          <span class="time">{{ e.time }}</span>
+        </li>
+      } @empty {
+        <li class="empty">Sin eventos. Presiona "Iniciar".</li>
+      }
+    </ul>
+  </section>
+</main>

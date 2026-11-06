@@ -1,11 +1,9 @@
-import { Component, signal } from '@angular/core';
+import { Component } from '@angular/core';
+import { Monitor } from './monitor/monitor';
 
 @Component({
-  imports: [],
   selector: 'app-root',
-  styleUrl: './app.css',
-  templateUrl: './app.html',
+  imports: [Monitor],
+  template: `<app-monitor />`,
 })
-export class App {
-  protected readonly title = signal('ReactiveEventMonitor');
-}
+export class App {}
